@@ -6,13 +6,16 @@ type ExampleEntity @entity {
 }
 
 type ContributionMade @entity {
+  id: ID!
   user: Bytes! # address
 }
 
-type RequestGranted @RequestGranted {
+type RequestGranted @entity {
+  id: ID!
   user: Bytes! # address
 }
 
-type RequestMade @RequestMade {
+type RequestMade @entity {
+  id: ID!
   user: Bytes! # address
 }

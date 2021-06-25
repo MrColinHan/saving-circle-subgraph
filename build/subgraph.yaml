@@ -1,4 +1,6 @@
 specVersion: 0.0.2
+description: subgraph for the saving circle smart contrat built on Celo
+repository: https://github.com/MrColinHan/saving-circle-subgraph
 schema:
   file: schema.graphql
 dataSources:
