@@ -6,7 +6,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Contract
-    network: mainnet
+    network: celo
     source:
       address: "0x670bA97995cf7bCcD1C4963dfFa0289c4F4883d6"
       abi: Contract
@@ -15,6 +15,7 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
+        - Contribution_Made
         - ContributionMade
         - RequestGranted
         - RequestMade

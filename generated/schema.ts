@@ -69,3 +69,150 @@ export class ExampleEntity extends Entity {
     this.set("circle", Value.fromBytes(value));
   }
 }
+
+export class Contribution_Made extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save Contribution_Made entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save Contribution_Made entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("Contribution_Made", id.toString(), this);
+  }
+
+  static load(id: string): Contribution_Made | null {
+    return store.get("Contribution_Made", id) as Contribution_Made | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get user(): Bytes {
+    let value = this.get("user");
+    return value.toBytes();
+  }
+
+  set user(value: Bytes) {
+    this.set("user", Value.fromBytes(value));
+  }
+
+  get circle(): Bytes {
+    let value = this.get("circle");
+    return value.toBytes();
+  }
+
+  set circle(value: Bytes) {
+    this.set("circle", Value.fromBytes(value));
+  }
+}
+
+export class RequestGranted extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save RequestGranted entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save RequestGranted entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("RequestGranted", id.toString(), this);
+  }
+
+  static load(id: string): RequestGranted | null {
+    return store.get("RequestGranted", id) as RequestGranted | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get user(): Bytes {
+    let value = this.get("user");
+    return value.toBytes();
+  }
+
+  set user(value: Bytes) {
+    this.set("user", Value.fromBytes(value));
+  }
+
+  get circle(): Bytes {
+    let value = this.get("circle");
+    return value.toBytes();
+  }
+
+  set circle(value: Bytes) {
+    this.set("circle", Value.fromBytes(value));
+  }
+}
+
+export class RequestMade extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save RequestMade entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save RequestMade entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("RequestMade", id.toString(), this);
+  }
+
+  static load(id: string): RequestMade | null {
+    return store.get("RequestMade", id) as RequestMade | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get user(): Bytes {
+    let value = this.get("user");
+    return value.toBytes();
+  }
+
+  set user(value: Bytes) {
+    this.set("user", Value.fromBytes(value));
+  }
+
+  get circle(): Bytes {
+    let value = this.get("circle");
+    return value.toBytes();
+  }
+
+  set circle(value: Bytes) {
+    this.set("circle", Value.fromBytes(value));
+  }
+}
