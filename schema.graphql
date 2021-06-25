@@ -4,3 +4,15 @@ type ExampleEntity @entity {
   user: Bytes! # address
   circle: Bytes! # bytes32
 }
+
+type ContributionMade @entity {
+  user: Bytes! # address
+}
+
+type RequestGranted @RequestGranted {
+  user: Bytes! # address
+}
+
+type RequestMade @RequestMade {
+  user: Bytes! # address
+}
