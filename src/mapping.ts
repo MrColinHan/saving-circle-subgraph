@@ -5,13 +5,13 @@ import {
   RequestGranted,
   RequestMade
 } from "../generated/Contract/Contract"
-import { ExampleEntity, Contribution_Made } from "../generated/schema"
+import { ExampleEntity, ContributionMadeEntity } from "../generated/schema"
 
 export function handleContributionMade(event: ContributionMade): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
   //***let entity = ExampleEntity.load(event.transaction.from.toHex())
-  let new_contribution_made = new Contribution_Made(`${event.params.user}-${event.params.circle}`)
+  let new_contribution_made = new ContributionMadeEntity(`${event.params.user}-${event.params.circle}`)
 
   /*
     ContributionsMade @entity {

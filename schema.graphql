@@ -5,19 +5,19 @@ type ExampleEntity @entity {
   circle: Bytes! # bytes32
 }
 
-type Contribution_Made @entity {
+type ContributionMadeEntity @entity {
   id: ID!
   user: Bytes! # address
   circle: Bytes! # bytes32
 }
 
-type RequestGranted @entity {
+type RequestGrantedEntity @entity {
   id: ID!
   user: Bytes! # address
   circle: Bytes! # bytes32
 }
  
-type RequestMade @entity {
+type RequestMadeEntity @entity {
   id: ID!
   user: Bytes! # address
   circle: Bytes! # bytes32

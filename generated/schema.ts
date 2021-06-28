@@ -70,7 +70,7 @@ export class ExampleEntity extends Entity {
   }
 }
 
-export class Contribution_Made extends Entity {
+export class ContributionMadeEntity extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -78,17 +78,23 @@ export class Contribution_Made extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save Contribution_Made entity without an ID");
+    assert(
+      id !== null,
+      "Cannot save ContributionMadeEntity entity without an ID"
+    );
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save Contribution_Made entity with non-string ID. " +
+      "Cannot save ContributionMadeEntity entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("Contribution_Made", id.toString(), this);
+    store.set("ContributionMadeEntity", id.toString(), this);
   }
 
-  static load(id: string): Contribution_Made | null {
-    return store.get("Contribution_Made", id) as Contribution_Made | null;
+  static load(id: string): ContributionMadeEntity | null {
+    return store.get(
+      "ContributionMadeEntity",
+      id
+    ) as ContributionMadeEntity | null;
   }
 
   get id(): string {
@@ -119,7 +125,7 @@ export class Contribution_Made extends Entity {
   }
 }
 
-export class RequestGranted extends Entity {
+export class RequestGrantedEntity extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -127,17 +133,20 @@ export class RequestGranted extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save RequestGranted entity without an ID");
+    assert(
+      id !== null,
+      "Cannot save RequestGrantedEntity entity without an ID"
+    );
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save RequestGranted entity with non-string ID. " +
+      "Cannot save RequestGrantedEntity entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("RequestGranted", id.toString(), this);
+    store.set("RequestGrantedEntity", id.toString(), this);
   }
 
-  static load(id: string): RequestGranted | null {
-    return store.get("RequestGranted", id) as RequestGranted | null;
+  static load(id: string): RequestGrantedEntity | null {
+    return store.get("RequestGrantedEntity", id) as RequestGrantedEntity | null;
   }
 
   get id(): string {
@@ -168,7 +177,7 @@ export class RequestGranted extends Entity {
   }
 }
 
-export class RequestMade extends Entity {
+export class RequestMadeEntity extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -176,17 +185,17 @@ export class RequestMade extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save RequestMade entity without an ID");
+    assert(id !== null, "Cannot save RequestMadeEntity entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save RequestMade entity with non-string ID. " +
+      "Cannot save RequestMadeEntity entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("RequestMade", id.toString(), this);
+    store.set("RequestMadeEntity", id.toString(), this);
   }
 
-  static load(id: string): RequestMade | null {
-    return store.get("RequestMade", id) as RequestMade | null;
+  static load(id: string): RequestMadeEntity | null {
+    return store.get("RequestMadeEntity", id) as RequestMadeEntity | null;
   }
 
   get id(): string {
