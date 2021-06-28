@@ -123,6 +123,15 @@ export class ContributionMadeEntity extends Entity {
   set circle(value: Bytes) {
     this.set("circle", Value.fromBytes(value));
   }
+
+  get amount(): BigInt {
+    let value = this.get("amount");
+    return value.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
+  }
 }
 
 export class RequestGrantedEntity extends Entity {
@@ -158,13 +167,13 @@ export class RequestGrantedEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get user(): Bytes {
-    let value = this.get("user");
+  get requester(): Bytes {
+    let value = this.get("requester");
     return value.toBytes();
   }
 
-  set user(value: Bytes) {
-    this.set("user", Value.fromBytes(value));
+  set requester(value: Bytes) {
+    this.set("requester", Value.fromBytes(value));
   }
 
   get circle(): Bytes {
@@ -174,6 +183,15 @@ export class RequestGrantedEntity extends Entity {
 
   set circle(value: Bytes) {
     this.set("circle", Value.fromBytes(value));
+  }
+
+  get amount(): BigInt {
+    let value = this.get("amount");
+    return value.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
   }
 }
 
@@ -207,13 +225,13 @@ export class RequestMadeEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get user(): Bytes {
-    let value = this.get("user");
+  get requester(): Bytes {
+    let value = this.get("requester");
     return value.toBytes();
   }
 
-  set user(value: Bytes) {
-    this.set("user", Value.fromBytes(value));
+  set requester(value: Bytes) {
+    this.set("requester", Value.fromBytes(value));
   }
 
   get circle(): Bytes {
@@ -223,5 +241,14 @@ export class RequestMadeEntity extends Entity {
 
   set circle(value: Bytes) {
     this.set("circle", Value.fromBytes(value));
+  }
+
+  get amount(): BigInt {
+    let value = this.get("amount");
+    return value.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
   }
 }

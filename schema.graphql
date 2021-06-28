@@ -9,16 +9,19 @@ type ContributionMadeEntity @entity {
   id: ID!
   user: Bytes! # address
   circle: Bytes! # bytes32
+  amount: BigInt!
 }
 
 type RequestGrantedEntity @entity {
   id: ID!
-  user: Bytes! # address
+  requester: Bytes! # address
   circle: Bytes! # bytes32
+  amount: BigInt!
 }
  
 type RequestMadeEntity @entity {
   id: ID!
-  user: Bytes! # address
+  requester: Bytes! # address
   circle: Bytes! # bytes32
+  amount: BigInt!
 }

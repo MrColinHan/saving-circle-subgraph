@@ -16,7 +16,9 @@ dataSources:
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Contribution_Made
+        - ContributionMadeEntity
+        - RequestGrantedEntity
+        - RequestMadeEntity
         - ContributionMade
         - RequestGranted
         - RequestMade

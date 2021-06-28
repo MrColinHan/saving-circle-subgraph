@@ -5,13 +5,13 @@ import {
   RequestGranted,
   RequestMade
 } from "../generated/Contract/Contract"
-import { ExampleEntity, ContributionMadeEntity } from "../generated/schema"
+import { ExampleEntity, ContributionMadeEntity, RequestGrantedEntity, RequestMadeEntity } from "../generated/schema"
 
 export function handleContributionMade(event: ContributionMade): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
   //***let entity = ExampleEntity.load(event.transaction.from.toHex())
-  let new_contribution_made = new ContributionMadeEntity(`${event.params.user}-${event.params.circle}`)
+  let NewContributionMadeEntity = new ContributionMadeEntity(`${event.params.user}-${event.params.circle}`)
 
   /*
     ContributionsMade @entity {
@@ -41,12 +41,12 @@ export function handleContributionMade(event: ContributionMade): void {
   //***entity.count = entity.count + BigInt.fromI32(1)
 
   // Entity fields can be set based on event parameters
-  new_contribution_made.user = event.params.user
-  new_contribution_made.circle = event.params.circle
+  NewContributionMadeEntity.user = event.params.user
+  NewContributionMadeEntity.circle = event.params.circle
 
   // Entities can be written to the store with `.save()`
   //***entity.save()
-  new_contribution_made.save()
+  NewContributionMadeEntity.save()
 
   // Note: If a handler doesn't require existing field values, it is faster
   // _not_ to load the entity from the store. Instead, create it fresh with
@@ -71,6 +71,22 @@ export function handleContributionMade(event: ContributionMade): void {
   // - contract.queryMissedPayments(...)
 }
 
-export function handleRequestGranted(event: RequestGranted): void {}
+export function handleRequestGranted(event: RequestGranted): void {
 
-export function handleRequestMade(event: RequestMade): void {}
+  let NewRequestGrantedEntity = new RequestGrantedEntity(`${event.params.requester}-${event.params.circle}`)
+
+  NewRequestGrantedEntity.requester = event.params.requester
+  NewRequestGrantedEntity.circle = event.params.circle
+  
+  NewRequestGrantedEntity.save()
+}
+
+export function handleRequestMade(event: RequestMade): void {
+  
+  let NewRequestMadeEntity = new RequestMadeEntity(`${event.params.requester}-${event.params.circle}`)
+
+  NewRequestMadeEntity.requester = event.params.requester
+  NewRequestMadeEntity.circle = event.params.circle
+  
+  NewRequestMadeEntity.save()
+}
