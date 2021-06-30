@@ -11,7 +11,7 @@ export function handleContributionMade(event: ContributionMade): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
   //***let entity = ExampleEntity.load(event.transaction.from.toHex())
-  let NewContributionMadeEntity = new ContributionMadeEntity(`${event.params.user}-${event.params.circle}`)
+  let NewContributionMadeEntity = new ContributionMadeEntity(event.params.user.toHexString() + event.params.circle.toString())
 
   /*
     ContributionsMade @entity {
@@ -43,6 +43,7 @@ export function handleContributionMade(event: ContributionMade): void {
   // Entity fields can be set based on event parameters
   NewContributionMadeEntity.user = event.params.user
   NewContributionMadeEntity.circle = event.params.circle
+  NewContributionMadeEntity.amount = event.params.amount
 
   // Entities can be written to the store with `.save()`
   //***entity.save()
@@ -73,20 +74,22 @@ export function handleContributionMade(event: ContributionMade): void {
 
 export function handleRequestGranted(event: RequestGranted): void {
 
-  let NewRequestGrantedEntity = new RequestGrantedEntity(`${event.params.requester}-${event.params.circle}`)
+  let NewRequestGrantedEntity = new RequestGrantedEntity(event.params.requester.toHexString() + event.params.circle.toString())
 
   NewRequestGrantedEntity.requester = event.params.requester
   NewRequestGrantedEntity.circle = event.params.circle
+  NewRequestGrantedEntity.amount = event.params.amount
   
   NewRequestGrantedEntity.save()
 }
 
 export function handleRequestMade(event: RequestMade): void {
   
-  let NewRequestMadeEntity = new RequestMadeEntity(`${event.params.requester}-${event.params.circle}`)
+  let NewRequestMadeEntity = new RequestMadeEntity(event.params.requester.toHexString() + event.params.circle.toHexString() + event.block.timestamp.toHexString())
 
   NewRequestMadeEntity.requester = event.params.requester
   NewRequestMadeEntity.circle = event.params.circle
+  NewRequestMadeEntity.amount = event.params.amount
   
   NewRequestMadeEntity.save()
 }

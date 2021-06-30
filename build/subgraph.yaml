@@ -8,9 +8,9 @@ dataSources:
     name: Contract
     network: celo
     source:
-      address: "0x670bA97995cf7bCcD1C4963dfFa0289c4F4883d6"
+      address: "0x22CB1B4f609e58A16a0070aa3e2cCcF5dF36Ab54"
       abi: Contract
-      startBlock: 7377583
+      startBlock: 7489495
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -19,9 +19,7 @@ dataSources:
         - ContributionMadeEntity
         - RequestGrantedEntity
         - RequestMadeEntity
-        - ContributionMade
-        - RequestGranted
-        - RequestMade
+        - UserEntity
       abis:
         - name: Contract
           file: Contract/abis/Contract.json

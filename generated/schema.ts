@@ -252,3 +252,34 @@ export class RequestMadeEntity extends Entity {
     this.set("amount", Value.fromBigInt(value));
   }
 }
+
+export class UserEntity extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save UserEntity entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save UserEntity entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("UserEntity", id.toString(), this);
+  }
+
+  static load(id: string): UserEntity | null {
+    return store.get("UserEntity", id) as UserEntity | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+}

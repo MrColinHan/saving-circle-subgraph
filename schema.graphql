@@ -25,3 +25,7 @@ type RequestMadeEntity @entity {
   circle: Bytes! # bytes32
   amount: BigInt!
 }
+
+type UserEntity @entity {
+  id: ID!
+}
