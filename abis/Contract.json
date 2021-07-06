@@ -3,6 +3,48 @@
         "inputs": [{
                 "indexed": false,
                 "internalType": "address",
+                "name": "creator",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "bytes32",
+                "name": "circle",
+                "type": "bytes32"
+            }
+        ],
+        "name": "CircleCreated",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "bytes32",
+                "name": "circle",
+                "type": "bytes32"
+            },
+            {
+                "indexed": false,
+                "internalType": "bool",
+                "name": "status",
+                "type": "bool"
+            }
+        ],
+        "name": "CircleMemberUpdate",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
                 "name": "user",
                 "type": "address"
             },
@@ -20,6 +62,96 @@
             }
         ],
         "name": "ContributionMade",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
+                "name": "depositor",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "bytes32",
+                "name": "circle",
+                "type": "bytes32"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "DepositMade",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
+                "name": "requester",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "bytes32",
+                "name": "circle",
+                "type": "bytes32"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "bool",
+                "name": "granted",
+                "type": "bool"
+            }
+        ],
+        "name": "LoanRequestMade",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
+                "name": "borrower",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "bytes32",
+                "name": "circle",
+                "type": "bytes32"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "fullamount",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "repayment",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "bool",
+                "name": "fullyrepaid",
+                "type": "bool"
+            }
+        ],
+        "name": "RepaymentStatus",
         "type": "event"
     },
     {
@@ -71,18 +203,41 @@
         "type": "event"
     },
     {
-        "inputs": [
-            { "internalType": "string", "name": "uuid", "type": "string" },
-            { "internalType": "address[]", "name": "members", "type": "address[]" },
-            { "internalType": "address", "name": "tokenAddr", "type": "address" },
-            { "internalType": "uint256", "name": "depositAmount", "type": "uint256" },
+        "inputs": [{
+                "internalType": "string",
+                "name": "uuid",
+                "type": "string"
+            },
             {
-                "internalType": "enum Circle.GovernanceType",
+                "internalType": "address[]",
+                "name": "members",
+                "type": "address[]"
+            },
+            {
+                "internalType": "address",
+                "name": "tokenAddr",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "depositAmount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "enum SavingCircle.GovernanceType",
                 "name": "govType",
                 "type": "uint8"
             },
-            { "internalType": "uint256", "name": "cycleLength", "type": "uint256" },
-            { "internalType": "bool", "name": "autoStart", "type": "bool" }
+            {
+                "internalType": "uint256",
+                "name": "cycleTime",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "autoStart",
+                "type": "bool"
+            }
         ],
         "name": "createCircle",
         "outputs": [],
@@ -90,10 +245,21 @@
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "bytes32", "name": "circleID", "type": "bytes32" },
-            { "internalType": "address", "name": "token", "type": "address" },
-            { "internalType": "uint256", "name": "value", "type": "uint256" }
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "circleID",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            }
         ],
         "name": "deposit",
         "outputs": [],
@@ -101,29 +267,175 @@
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "bytes32", "name": "circleID", "type": "bytes32" }
+        "inputs": [{
+                "internalType": "address",
+                "name": "creator",
+                "type": "address"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "circle",
+                "type": "bytes32"
+            }
         ],
+        "name": "emitCircleCreateEvent",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "circle",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "bool",
+                "name": "status",
+                "type": "bool"
+            }
+        ],
+        "name": "emitCircleUpdateEvent",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "depositor",
+                "type": "address"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "circle",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "emitDepositEvent",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "requester",
+                "type": "address"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "circle",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "granted",
+                "type": "bool"
+            }
+        ],
+        "name": "emitLoanRequestEvent",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "borrower",
+                "type": "address"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "circle",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "fullamount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "repayment",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "fullyrepaid",
+                "type": "bool"
+            }
+        ],
+        "name": "emitRepaymentEvent",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "bytes32",
+            "name": "circleID",
+            "type": "bytes32"
+        }],
         "name": "getBalances",
-        "outputs": [
-            { "internalType": "address[]", "name": "", "type": "address[]" },
-            { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
+        "outputs": [{
+                "internalType": "address[]",
+                "name": "",
+                "type": "address[]"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "",
+                "type": "uint256[]"
+            }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "bytes32", "name": "circle", "type": "bytes32" }
-        ],
+        "inputs": [{
+            "internalType": "bytes32",
+            "name": "circle",
+            "type": "bytes32"
+        }],
         "name": "getCircleInfo",
-        "outputs": [
-            { "internalType": "address[]", "name": "", "type": "address[]" },
-            { "internalType": "address", "name": "", "type": "address" },
-            { "internalType": "uint256", "name": "", "type": "uint256" },
-            { "internalType": "uint256", "name": "", "type": "uint256" },
+        "outputs": [{
+                "internalType": "address[]",
+                "name": "",
+                "type": "address[]"
+            },
             {
-                "internalType": "enum Circle.GovernanceType",
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "enum SavingCircle.GovernanceType",
                 "name": "",
                 "type": "uint8"
             }
@@ -132,50 +444,130 @@
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "address", "name": "user", "type": "address" }
-        ],
+        "inputs": [{
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+        }],
         "name": "getCircles",
-        "outputs": [
-            { "internalType": "bytes32[]", "name": "", "type": "bytes32[]" }
-        ],
+        "outputs": [{
+            "internalType": "bytes32[]",
+            "name": "",
+            "type": "bytes32[]"
+        }],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "bytes32", "name": "circle", "type": "bytes32" }
-        ],
+        "inputs": [{
+            "internalType": "bytes32",
+            "name": "circle",
+            "type": "bytes32"
+        }],
         "name": "getMembers",
-        "outputs": [
-            { "internalType": "address[]", "name": "", "type": "address[]" }
+        "outputs": [{
+            "internalType": "address[]",
+            "name": "",
+            "type": "address[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "circleID",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "requestIndex",
+                "type": "uint256"
+            }
+        ],
+        "name": "getRequest",
+        "outputs": [{
+                "internalType": "uint256",
+                "name": "_approvals",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_denials",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_requester",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
+            }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "bytes32", "name": "circleID", "type": "bytes32" }
+        "inputs": [{
+            "internalType": "bytes32",
+            "name": "circleID",
+            "type": "bytes32"
+        }],
+        "name": "getRequests",
+        "outputs": [{
+                "internalType": "uint256[]",
+                "name": "_approvals",
+                "type": "uint256[]"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "_denials",
+                "type": "uint256[]"
+            },
+            {
+                "internalType": "address[]",
+                "name": "_addresses",
+                "type": "address[]"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "_amounts",
+                "type": "uint256[]"
+            }
         ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "bytes32",
+            "name": "circleID",
+            "type": "bytes32"
+        }],
         "name": "getTotalBalance",
-        "outputs": [
-            { "internalType": "uint256", "name": "", "type": "uint256" },
-            { "internalType": "uint256", "name": "", "type": "uint256" }
+        "outputs": [{
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
         ],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "pay",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            { "internalType": "bytes32", "name": "circleID", "type": "bytes32" }
-        ],
+        "inputs": [{
+            "internalType": "bytes32",
+            "name": "circleID",
+            "type": "bytes32"
+        }],
         "name": "queryMissedPayments",
         "outputs": [{
                 "internalType": "address[]",
@@ -192,10 +584,16 @@
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "bytes32", "name": "circleID", "type": "bytes32" },
-            { "internalType": "address", "name": "token", "type": "address" },
-            { "internalType": "uint256", "name": "value", "type": "uint256" }
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "circleID",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            }
         ],
         "name": "request",
         "outputs": [],
@@ -203,19 +601,32 @@
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "bytes32", "name": "circle", "type": "bytes32" }
-        ],
+        "inputs": [{
+            "internalType": "bytes32",
+            "name": "circle",
+            "type": "bytes32"
+        }],
         "name": "startNewCycle",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "bytes32", "name": "circleID", "type": "bytes32" },
-            { "internalType": "uint256", "name": "requestIndex", "type": "uint256" },
-            { "internalType": "bool", "name": "approved", "type": "bool" }
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "circleID",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "requestIndex",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "approved",
+                "type": "bool"
+            }
         ],
         "name": "vote",
         "outputs": [],
@@ -223,14 +634,24 @@
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "bytes32", "name": "circleID", "type": "bytes32" },
-            { "internalType": "uint256", "name": "amt", "type": "uint256" }
+        "inputs": [{
+                "internalType": "bytes32",
+                "name": "circleID",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amt",
+                "type": "uint256"
+            }
         ],
         "name": "withdraw",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
-    { "stateMutability": "payable", "type": "receive" }
+    {
+        "stateMutability": "payable",
+        "type": "receive"
+    }
 ]

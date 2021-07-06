@@ -8,26 +8,29 @@ dataSources:
     name: Contract
     network: celo
     source:
-      address: "0x22CB1B4f609e58A16a0070aa3e2cCcF5dF36Ab54"
+      address: "0xD8D1E94A0DB2d6a3377744d97CE7d0Df52B66667"
       abi: Contract
-      startBlock: 7489495
+      startBlock: 7588787
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - ContributionMadeEntity
-        - RequestGrantedEntity
-        - RequestMadeEntity
-        - UserEntity
+        - DepositMadeEntity
+        - LoanRequestMadeEntity
+        - CircleCreatedEntity
       abis:
         - name: Contract
           file: ./abis/Contract.json
       eventHandlers:
-        - event: ContributionMade(address,bytes32,uint256)
-          handler: handleContributionMade
-        - event: RequestGranted(address,bytes32,uint256)
-          handler: handleRequestGranted
-        - event: RequestMade(address,bytes32,uint256)
-          handler: handleRequestMade
+        - event: DepositMade(address,bytes32,uint256) 
+          handler: handleDepositMade
+        - event: LoanRequestMade(address,bytes32,uint256,bool)
+          handler: handleLoanRequestMade
+        - event: CircleCreated(address,bytes32)
+          handler: handleCircleCreated
+        - event: CircleMemberUpdate(address,bytes32,bool)
+          handler: handleCircleMemberUpdate
+        - event: RepaymentStatus(address,bytes32,uint256,uint256,bool)
+          handler: handleRepaymentStatus
       file: ./src/mapping.ts

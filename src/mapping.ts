@@ -1,30 +1,31 @@
 import { BigInt } from "@graphprotocol/graph-ts"
 import {
   Contract,
-  ContributionMade,
-  RequestGranted,
-  RequestMade
+  DepositMade,
+  LoanRequestMade,
+  CircleCreated,
+  CircleMemberUpdate,
+  RepaymentStatus
 } from "../generated/Contract/Contract"
-import { ExampleEntity, ContributionMadeEntity, RequestGrantedEntity, RequestMadeEntity } from "../generated/schema"
+import { DepositMadeEntity, LoanRequestMadeEntity, CircleCreatedEntity} from "../generated/schema"
 
-export function handleContributionMade(event: ContributionMade): void {
+export function handleDepositMade(event: DepositMade): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
-  //***let entity = ExampleEntity.load(event.transaction.from.toHex())
-  let NewContributionMadeEntity = new ContributionMadeEntity(event.params.user.toHexString() + event.params.circle.toString())
 
-  /*
-    ContributionsMade @entity {
-      id: ID! 
-      circle: Bytes
-      user: Bytes
-      amountContributed: BigInt
-    }
+  //let NewContributionMadeEntity = new ContributionMadeEntity(event.params.user.toHexString() + event.params.circle.toHexString() + event.block.timestamp.toString())
 
-    ContributionsMade_Hour @entity {
+  // Entity fields can be set based on event parameters
+  //NewContributionMadeEntity.contributor = event.params.user
+  //NewContributionMadeEntity.circle = event.params.circle
+  //NewContributionMadeEntity.timeStamp = event.block.timestamp
+  //NewContributionMadeEntity.amount = event.params.amount
 
-    }
-  */
+  //let contract = Contract.bind(event.address)
+
+  // Entities can be written to the store with `.save()`
+  //NewContributionMadeEntity.save()
+
 
   //ContributionsMade.load()
 
@@ -40,14 +41,7 @@ export function handleContributionMade(event: ContributionMade): void {
   // BigInt and BigDecimal math are supported
   //***entity.count = entity.count + BigInt.fromI32(1)
 
-  // Entity fields can be set based on event parameters
-  NewContributionMadeEntity.user = event.params.user
-  NewContributionMadeEntity.circle = event.params.circle
-  NewContributionMadeEntity.amount = event.params.amount
 
-  // Entities can be written to the store with `.save()`
-  //***entity.save()
-  NewContributionMadeEntity.save()
 
   // Note: If a handler doesn't require existing field values, it is faster
   // _not_ to load the entity from the store. Instead, create it fresh with
@@ -72,24 +66,23 @@ export function handleContributionMade(event: ContributionMade): void {
   // - contract.queryMissedPayments(...)
 }
 
-export function handleRequestGranted(event: RequestGranted): void {
-
-  let NewRequestGrantedEntity = new RequestGrantedEntity(event.params.requester.toHexString() + event.params.circle.toString())
-
-  NewRequestGrantedEntity.requester = event.params.requester
-  NewRequestGrantedEntity.circle = event.params.circle
-  NewRequestGrantedEntity.amount = event.params.amount
-  
-  NewRequestGrantedEntity.save()
+export function handleLoanRequestMade(event: LoanRequestMade): void {
 }
 
-export function handleRequestMade(event: RequestMade): void {
-  
-  let NewRequestMadeEntity = new RequestMadeEntity(event.params.requester.toHexString() + event.params.circle.toHexString() + event.block.timestamp.toHexString())
+export function handleCircleCreated(event: CircleCreated): void {
+  let NewCircleCreatedEntity = new CircleCreatedEntity(event.params.creator.toHexString() + event.params.circle.toHexString() + event.block.timestamp.toString())
 
-  NewRequestMadeEntity.requester = event.params.requester
-  NewRequestMadeEntity.circle = event.params.circle
-  NewRequestMadeEntity.amount = event.params.amount
-  
-  NewRequestMadeEntity.save()
+  NewCircleCreatedEntity.creator = event.params.creator
+  NewCircleCreatedEntity.circle = event.params.circle
+  NewCircleCreatedEntity.timeStamp = event.block.timestamp
+
+  NewCircleCreatedEntity.save()
+
 }
+
+export function handleCircleMemberUpdate(event: CircleMemberUpdate): void {
+}
+
+export function handleRepaymentStatus(event: RepaymentStatus): void {
+}
+

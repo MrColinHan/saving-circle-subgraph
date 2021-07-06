@@ -10,6 +10,54 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
+export class CircleCreated extends ethereum.Event {
+  get params(): CircleCreated__Params {
+    return new CircleCreated__Params(this);
+  }
+}
+
+export class CircleCreated__Params {
+  _event: CircleCreated;
+
+  constructor(event: CircleCreated) {
+    this._event = event;
+  }
+
+  get creator(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get circle(): Bytes {
+    return this._event.parameters[1].value.toBytes();
+  }
+}
+
+export class CircleMemberUpdate extends ethereum.Event {
+  get params(): CircleMemberUpdate__Params {
+    return new CircleMemberUpdate__Params(this);
+  }
+}
+
+export class CircleMemberUpdate__Params {
+  _event: CircleMemberUpdate;
+
+  constructor(event: CircleMemberUpdate) {
+    this._event = event;
+  }
+
+  get user(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get circle(): Bytes {
+    return this._event.parameters[1].value.toBytes();
+  }
+
+  get status(): boolean {
+    return this._event.parameters[2].value.toBoolean();
+  }
+}
+
 export class ContributionMade extends ethereum.Event {
   get params(): ContributionMade__Params {
     return new ContributionMade__Params(this);
@@ -33,6 +81,96 @@ export class ContributionMade__Params {
 
   get amount(): BigInt {
     return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class DepositMade extends ethereum.Event {
+  get params(): DepositMade__Params {
+    return new DepositMade__Params(this);
+  }
+}
+
+export class DepositMade__Params {
+  _event: DepositMade;
+
+  constructor(event: DepositMade) {
+    this._event = event;
+  }
+
+  get depositor(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get circle(): Bytes {
+    return this._event.parameters[1].value.toBytes();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+}
+
+export class LoanRequestMade extends ethereum.Event {
+  get params(): LoanRequestMade__Params {
+    return new LoanRequestMade__Params(this);
+  }
+}
+
+export class LoanRequestMade__Params {
+  _event: LoanRequestMade;
+
+  constructor(event: LoanRequestMade) {
+    this._event = event;
+  }
+
+  get requester(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get circle(): Bytes {
+    return this._event.parameters[1].value.toBytes();
+  }
+
+  get amount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get granted(): boolean {
+    return this._event.parameters[3].value.toBoolean();
+  }
+}
+
+export class RepaymentStatus extends ethereum.Event {
+  get params(): RepaymentStatus__Params {
+    return new RepaymentStatus__Params(this);
+  }
+}
+
+export class RepaymentStatus__Params {
+  _event: RepaymentStatus;
+
+  constructor(event: RepaymentStatus) {
+    this._event = event;
+  }
+
+  get borrower(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get circle(): Bytes {
+    return this._event.parameters[1].value.toBytes();
+  }
+
+  get fullamount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get repayment(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get fullyrepaid(): boolean {
+    return this._event.parameters[4].value.toBoolean();
   }
 }
 
@@ -136,6 +274,57 @@ export class Contract__getCircleInfoResult {
       "value4",
       ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value4))
     );
+    return map;
+  }
+}
+
+export class Contract__getRequestResult {
+  value0: BigInt;
+  value1: BigInt;
+  value2: Address;
+  value3: BigInt;
+
+  constructor(value0: BigInt, value1: BigInt, value2: Address, value3: BigInt) {
+    this.value0 = value0;
+    this.value1 = value1;
+    this.value2 = value2;
+    this.value3 = value3;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
+    map.set("value2", ethereum.Value.fromAddress(this.value2));
+    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
+    return map;
+  }
+}
+
+export class Contract__getRequestsResult {
+  value0: Array<BigInt>;
+  value1: Array<BigInt>;
+  value2: Array<Address>;
+  value3: Array<BigInt>;
+
+  constructor(
+    value0: Array<BigInt>,
+    value1: Array<BigInt>,
+    value2: Array<Address>,
+    value3: Array<BigInt>
+  ) {
+    this.value0 = value0;
+    this.value1 = value1;
+    this.value2 = value2;
+    this.value3 = value3;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromUnsignedBigIntArray(this.value0));
+    map.set("value1", ethereum.Value.fromUnsignedBigIntArray(this.value1));
+    map.set("value2", ethereum.Value.fromAddressArray(this.value2));
+    map.set("value3", ethereum.Value.fromUnsignedBigIntArray(this.value3));
     return map;
   }
 }
@@ -293,6 +482,90 @@ export class Contract extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddressArray());
   }
 
+  getRequest(
+    circleID: Bytes,
+    requestIndex: BigInt
+  ): Contract__getRequestResult {
+    let result = super.call(
+      "getRequest",
+      "getRequest(bytes32,uint256):(uint256,uint256,address,uint256)",
+      [
+        ethereum.Value.fromFixedBytes(circleID),
+        ethereum.Value.fromUnsignedBigInt(requestIndex)
+      ]
+    );
+
+    return new Contract__getRequestResult(
+      result[0].toBigInt(),
+      result[1].toBigInt(),
+      result[2].toAddress(),
+      result[3].toBigInt()
+    );
+  }
+
+  try_getRequest(
+    circleID: Bytes,
+    requestIndex: BigInt
+  ): ethereum.CallResult<Contract__getRequestResult> {
+    let result = super.tryCall(
+      "getRequest",
+      "getRequest(bytes32,uint256):(uint256,uint256,address,uint256)",
+      [
+        ethereum.Value.fromFixedBytes(circleID),
+        ethereum.Value.fromUnsignedBigInt(requestIndex)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new Contract__getRequestResult(
+        value[0].toBigInt(),
+        value[1].toBigInt(),
+        value[2].toAddress(),
+        value[3].toBigInt()
+      )
+    );
+  }
+
+  getRequests(circleID: Bytes): Contract__getRequestsResult {
+    let result = super.call(
+      "getRequests",
+      "getRequests(bytes32):(uint256[],uint256[],address[],uint256[])",
+      [ethereum.Value.fromFixedBytes(circleID)]
+    );
+
+    return new Contract__getRequestsResult(
+      result[0].toBigIntArray(),
+      result[1].toBigIntArray(),
+      result[2].toAddressArray(),
+      result[3].toBigIntArray()
+    );
+  }
+
+  try_getRequests(
+    circleID: Bytes
+  ): ethereum.CallResult<Contract__getRequestsResult> {
+    let result = super.tryCall(
+      "getRequests",
+      "getRequests(bytes32):(uint256[],uint256[],address[],uint256[])",
+      [ethereum.Value.fromFixedBytes(circleID)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new Contract__getRequestsResult(
+        value[0].toBigIntArray(),
+        value[1].toBigIntArray(),
+        value[2].toAddressArray(),
+        value[3].toBigIntArray()
+      )
+    );
+  }
+
   getTotalBalance(circleID: Bytes): Contract__getTotalBalanceResult {
     let result = super.call(
       "getTotalBalance",
@@ -397,7 +670,7 @@ export class CreateCircleCall__Inputs {
     return this._call.inputValues[4].value.toI32();
   }
 
-  get cycleLength(): BigInt {
+  get cycleTime(): BigInt {
     return this._call.inputValues[5].value.toBigInt();
   }
 
@@ -452,28 +725,200 @@ export class DepositCall__Outputs {
   }
 }
 
-export class PayCall extends ethereum.Call {
-  get inputs(): PayCall__Inputs {
-    return new PayCall__Inputs(this);
+export class EmitCircleCreateEventCall extends ethereum.Call {
+  get inputs(): EmitCircleCreateEventCall__Inputs {
+    return new EmitCircleCreateEventCall__Inputs(this);
   }
 
-  get outputs(): PayCall__Outputs {
-    return new PayCall__Outputs(this);
+  get outputs(): EmitCircleCreateEventCall__Outputs {
+    return new EmitCircleCreateEventCall__Outputs(this);
   }
 }
 
-export class PayCall__Inputs {
-  _call: PayCall;
+export class EmitCircleCreateEventCall__Inputs {
+  _call: EmitCircleCreateEventCall;
 
-  constructor(call: PayCall) {
+  constructor(call: EmitCircleCreateEventCall) {
+    this._call = call;
+  }
+
+  get creator(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get circle(): Bytes {
+    return this._call.inputValues[1].value.toBytes();
+  }
+}
+
+export class EmitCircleCreateEventCall__Outputs {
+  _call: EmitCircleCreateEventCall;
+
+  constructor(call: EmitCircleCreateEventCall) {
     this._call = call;
   }
 }
 
-export class PayCall__Outputs {
-  _call: PayCall;
+export class EmitCircleUpdateEventCall extends ethereum.Call {
+  get inputs(): EmitCircleUpdateEventCall__Inputs {
+    return new EmitCircleUpdateEventCall__Inputs(this);
+  }
 
-  constructor(call: PayCall) {
+  get outputs(): EmitCircleUpdateEventCall__Outputs {
+    return new EmitCircleUpdateEventCall__Outputs(this);
+  }
+}
+
+export class EmitCircleUpdateEventCall__Inputs {
+  _call: EmitCircleUpdateEventCall;
+
+  constructor(call: EmitCircleUpdateEventCall) {
+    this._call = call;
+  }
+
+  get user(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get circle(): Bytes {
+    return this._call.inputValues[1].value.toBytes();
+  }
+
+  get status(): boolean {
+    return this._call.inputValues[2].value.toBoolean();
+  }
+}
+
+export class EmitCircleUpdateEventCall__Outputs {
+  _call: EmitCircleUpdateEventCall;
+
+  constructor(call: EmitCircleUpdateEventCall) {
+    this._call = call;
+  }
+}
+
+export class EmitDepositEventCall extends ethereum.Call {
+  get inputs(): EmitDepositEventCall__Inputs {
+    return new EmitDepositEventCall__Inputs(this);
+  }
+
+  get outputs(): EmitDepositEventCall__Outputs {
+    return new EmitDepositEventCall__Outputs(this);
+  }
+}
+
+export class EmitDepositEventCall__Inputs {
+  _call: EmitDepositEventCall;
+
+  constructor(call: EmitDepositEventCall) {
+    this._call = call;
+  }
+
+  get depositor(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get circle(): Bytes {
+    return this._call.inputValues[1].value.toBytes();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+}
+
+export class EmitDepositEventCall__Outputs {
+  _call: EmitDepositEventCall;
+
+  constructor(call: EmitDepositEventCall) {
+    this._call = call;
+  }
+}
+
+export class EmitLoanRequestEventCall extends ethereum.Call {
+  get inputs(): EmitLoanRequestEventCall__Inputs {
+    return new EmitLoanRequestEventCall__Inputs(this);
+  }
+
+  get outputs(): EmitLoanRequestEventCall__Outputs {
+    return new EmitLoanRequestEventCall__Outputs(this);
+  }
+}
+
+export class EmitLoanRequestEventCall__Inputs {
+  _call: EmitLoanRequestEventCall;
+
+  constructor(call: EmitLoanRequestEventCall) {
+    this._call = call;
+  }
+
+  get requester(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get circle(): Bytes {
+    return this._call.inputValues[1].value.toBytes();
+  }
+
+  get amount(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get granted(): boolean {
+    return this._call.inputValues[3].value.toBoolean();
+  }
+}
+
+export class EmitLoanRequestEventCall__Outputs {
+  _call: EmitLoanRequestEventCall;
+
+  constructor(call: EmitLoanRequestEventCall) {
+    this._call = call;
+  }
+}
+
+export class EmitRepaymentEventCall extends ethereum.Call {
+  get inputs(): EmitRepaymentEventCall__Inputs {
+    return new EmitRepaymentEventCall__Inputs(this);
+  }
+
+  get outputs(): EmitRepaymentEventCall__Outputs {
+    return new EmitRepaymentEventCall__Outputs(this);
+  }
+}
+
+export class EmitRepaymentEventCall__Inputs {
+  _call: EmitRepaymentEventCall;
+
+  constructor(call: EmitRepaymentEventCall) {
+    this._call = call;
+  }
+
+  get borrower(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get circle(): Bytes {
+    return this._call.inputValues[1].value.toBytes();
+  }
+
+  get fullamount(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get repayment(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get fullyrepaid(): boolean {
+    return this._call.inputValues[4].value.toBoolean();
+  }
+}
+
+export class EmitRepaymentEventCall__Outputs {
+  _call: EmitRepaymentEventCall;
+
+  constructor(call: EmitRepaymentEventCall) {
     this._call = call;
   }
 }
@@ -499,12 +944,8 @@ export class RequestCall__Inputs {
     return this._call.inputValues[0].value.toBytes();
   }
 
-  get token(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
   get value(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
+    return this._call.inputValues[1].value.toBigInt();
   }
 }
 

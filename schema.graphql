@@ -1,31 +1,23 @@
-type ExampleEntity @entity {
+type DepositMadeEntity @entity {
   id: ID!
-  count: BigInt!
-  user: Bytes! # address
+  depositor: Bytes! # address
   circle: Bytes! # bytes32
-}
-
-type ContributionMadeEntity @entity {
-  id: ID!
-  user: Bytes! # address
-  circle: Bytes! # bytes32
+  timeStamp: BigInt!
   amount: BigInt!
 }
 
-type RequestGrantedEntity @entity {
+type LoanRequestMadeEntity @entity {
   id: ID!
   requester: Bytes! # address
   circle: Bytes! # bytes32
+  timeStamp: BigInt!
   amount: BigInt!
-}
- 
-type RequestMadeEntity @entity {
-  id: ID!
-  requester: Bytes! # address
-  circle: Bytes! # bytes32
-  amount: BigInt!
+  granted: Boolean!
 }
 
-type UserEntity @entity {
+type CircleCreatedEntity @entity {
   id: ID!
+  creator: Bytes! # address
+  circle: Bytes! # bytes32
+  timeStamp: BigInt!
 }

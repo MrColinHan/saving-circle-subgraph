@@ -12,7 +12,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class ExampleEntity extends Entity {
+export class DepositMadeEntity extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -20,17 +20,17 @@ export class ExampleEntity extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save ExampleEntity entity without an ID");
+    assert(id !== null, "Cannot save DepositMadeEntity entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save ExampleEntity entity with non-string ID. " +
+      "Cannot save DepositMadeEntity entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("ExampleEntity", id.toString(), this);
+    store.set("DepositMadeEntity", id.toString(), this);
   }
 
-  static load(id: string): ExampleEntity | null {
-    return store.get("ExampleEntity", id) as ExampleEntity | null;
+  static load(id: string): DepositMadeEntity | null {
+    return store.get("DepositMadeEntity", id) as DepositMadeEntity | null;
   }
 
   get id(): string {
@@ -42,22 +42,13 @@ export class ExampleEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get count(): BigInt {
-    let value = this.get("count");
-    return value.toBigInt();
-  }
-
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
-  }
-
-  get user(): Bytes {
-    let value = this.get("user");
+  get depositor(): Bytes {
+    let value = this.get("depositor");
     return value.toBytes();
   }
 
-  set user(value: Bytes) {
-    this.set("user", Value.fromBytes(value));
+  set depositor(value: Bytes) {
+    this.set("depositor", Value.fromBytes(value));
   }
 
   get circle(): Bytes {
@@ -68,9 +59,27 @@ export class ExampleEntity extends Entity {
   set circle(value: Bytes) {
     this.set("circle", Value.fromBytes(value));
   }
+
+  get timeStamp(): BigInt {
+    let value = this.get("timeStamp");
+    return value.toBigInt();
+  }
+
+  set timeStamp(value: BigInt) {
+    this.set("timeStamp", Value.fromBigInt(value));
+  }
+
+  get amount(): BigInt {
+    let value = this.get("amount");
+    return value.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
+  }
 }
 
-export class ContributionMadeEntity extends Entity {
+export class LoanRequestMadeEntity extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -80,21 +89,21 @@ export class ContributionMadeEntity extends Entity {
     let id = this.get("id");
     assert(
       id !== null,
-      "Cannot save ContributionMadeEntity entity without an ID"
+      "Cannot save LoanRequestMadeEntity entity without an ID"
     );
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save ContributionMadeEntity entity with non-string ID. " +
+      "Cannot save LoanRequestMadeEntity entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("ContributionMadeEntity", id.toString(), this);
+    store.set("LoanRequestMadeEntity", id.toString(), this);
   }
 
-  static load(id: string): ContributionMadeEntity | null {
+  static load(id: string): LoanRequestMadeEntity | null {
     return store.get(
-      "ContributionMadeEntity",
+      "LoanRequestMadeEntity",
       id
-    ) as ContributionMadeEntity | null;
+    ) as LoanRequestMadeEntity | null;
   }
 
   get id(): string {
@@ -106,13 +115,13 @@ export class ContributionMadeEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get user(): Bytes {
-    let value = this.get("user");
+  get requestor(): Bytes {
+    let value = this.get("requestor");
     return value.toBytes();
   }
 
-  set user(value: Bytes) {
-    this.set("user", Value.fromBytes(value));
+  set requestor(value: Bytes) {
+    this.set("requestor", Value.fromBytes(value));
   }
 
   get circle(): Bytes {
@@ -124,6 +133,15 @@ export class ContributionMadeEntity extends Entity {
     this.set("circle", Value.fromBytes(value));
   }
 
+  get timeStamp(): BigInt {
+    let value = this.get("timeStamp");
+    return value.toBigInt();
+  }
+
+  set timeStamp(value: BigInt) {
+    this.set("timeStamp", Value.fromBigInt(value));
+  }
+
   get amount(): BigInt {
     let value = this.get("amount");
     return value.toBigInt();
@@ -132,9 +150,18 @@ export class ContributionMadeEntity extends Entity {
   set amount(value: BigInt) {
     this.set("amount", Value.fromBigInt(value));
   }
+
+  get granted(): boolean {
+    let value = this.get("granted");
+    return value.toBoolean();
+  }
+
+  set granted(value: boolean) {
+    this.set("granted", Value.fromBoolean(value));
+  }
 }
 
-export class RequestGrantedEntity extends Entity {
+export class CircleCreatedEntity extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -142,20 +169,17 @@ export class RequestGrantedEntity extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(
-      id !== null,
-      "Cannot save RequestGrantedEntity entity without an ID"
-    );
+    assert(id !== null, "Cannot save CircleCreatedEntity entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save RequestGrantedEntity entity with non-string ID. " +
+      "Cannot save CircleCreatedEntity entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("RequestGrantedEntity", id.toString(), this);
+    store.set("CircleCreatedEntity", id.toString(), this);
   }
 
-  static load(id: string): RequestGrantedEntity | null {
-    return store.get("RequestGrantedEntity", id) as RequestGrantedEntity | null;
+  static load(id: string): CircleCreatedEntity | null {
+    return store.get("CircleCreatedEntity", id) as CircleCreatedEntity | null;
   }
 
   get id(): string {
@@ -167,13 +191,13 @@ export class RequestGrantedEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get requester(): Bytes {
-    let value = this.get("requester");
+  get creator(): Bytes {
+    let value = this.get("creator");
     return value.toBytes();
   }
 
-  set requester(value: Bytes) {
-    this.set("requester", Value.fromBytes(value));
+  set creator(value: Bytes) {
+    this.set("creator", Value.fromBytes(value));
   }
 
   get circle(): Bytes {
@@ -185,101 +209,12 @@ export class RequestGrantedEntity extends Entity {
     this.set("circle", Value.fromBytes(value));
   }
 
-  get amount(): BigInt {
-    let value = this.get("amount");
+  get timeStamp(): BigInt {
+    let value = this.get("timeStamp");
     return value.toBigInt();
   }
 
-  set amount(value: BigInt) {
-    this.set("amount", Value.fromBigInt(value));
-  }
-}
-
-export class RequestMadeEntity extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save RequestMadeEntity entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save RequestMadeEntity entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("RequestMadeEntity", id.toString(), this);
-  }
-
-  static load(id: string): RequestMadeEntity | null {
-    return store.get("RequestMadeEntity", id) as RequestMadeEntity | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get requester(): Bytes {
-    let value = this.get("requester");
-    return value.toBytes();
-  }
-
-  set requester(value: Bytes) {
-    this.set("requester", Value.fromBytes(value));
-  }
-
-  get circle(): Bytes {
-    let value = this.get("circle");
-    return value.toBytes();
-  }
-
-  set circle(value: Bytes) {
-    this.set("circle", Value.fromBytes(value));
-  }
-
-  get amount(): BigInt {
-    let value = this.get("amount");
-    return value.toBigInt();
-  }
-
-  set amount(value: BigInt) {
-    this.set("amount", Value.fromBigInt(value));
-  }
-}
-
-export class UserEntity extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id !== null, "Cannot save UserEntity entity without an ID");
-    assert(
-      id.kind == ValueKind.STRING,
-      "Cannot save UserEntity entity with non-string ID. " +
-        'Considering using .toHex() to convert the "id" to a string.'
-    );
-    store.set("UserEntity", id.toString(), this);
-  }
-
-  static load(id: string): UserEntity | null {
-    return store.get("UserEntity", id) as UserEntity | null;
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
+  set timeStamp(value: BigInt) {
+    this.set("timeStamp", Value.fromBigInt(value));
   }
 }
